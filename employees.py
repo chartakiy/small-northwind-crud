@@ -75,8 +75,7 @@ class Employees:
   
   def edit_employee(self, employee_id):
     self.db.cursor.execute("""
-        SELECT last_name, first_name, title, title_of_courtesy, birth_date, hire_date,
-               address, city, region, postal_code, country, home_phone, extension, photo, notes
+        SELECT last_name, first_name, title, title_of_courtesy, birth_date, hire_date, address, city, region, postal_code, country, home_phone, extension, photo, notes
         FROM employees
         WHERE employee_id = %s
     """, (employee_id,))
@@ -127,7 +126,7 @@ class Employees:
             notes = %s
         WHERE employee_id = %s
       """
-      self.db.cursor.execute(query, (new_last_name, new_first_name, new_title, new_title_of_courtesy, new_birth_date, new_hire_date, new_address, new_city, new_region, new_postal_code, new_country, new_home_phone, new_extension, new_photo, new_notes))
+      self.db.cursor.execute(query, (new_last_name, new_first_name, new_title, new_title_of_courtesy, new_birth_date, new_hire_date, new_address, new_city, new_region, new_postal_code, new_country, new_home_phone, new_extension, new_photo, new_notes, employee_id))
 
       self.db.connection.commit()
       print(f"Employee ID {employee_id} has been updated successfully")
@@ -168,6 +167,12 @@ class Employees:
     self.db.connection.commit()
     print(f"Employee '{title} {first} {last}' deleted successfully.")
   
+  def get_input(self, prompt, allow_null=False):
+    value = input(prompt).strip()
+    if allow_null and value == "":
+        return None
+    return value
+  
   def employee_manager(self):
     while True:
       print("\n ======================= Employees Manager =======================")
@@ -177,3 +182,29 @@ class Employees:
 
       if choice == "1":
         self.view_employees()
+      elif choice == "2":
+        last_name = input("Last Name: ")
+        first_name = input("First Name: ")
+        title = input("Title: ")
+        title_of_courtesy = input("Title of Courtesy: ")
+        birth_date = input("Birthdate: ")
+        hire_date = input("Hire Date: ")
+        address = input("Address: ")
+        city = input("City: ")
+        region = input("Region: ")
+        postal_code = input("Postal Code: ")
+        country = input("Country: ")
+        home_phone = input("Home Phone: ")
+        extension = input("Extension: ")
+        photo = self.get_input("Photo: ", allow_null=True)
+        notes = self.get_input("Notes: ", allow_null=True)
+
+        self.add_employee(last_name, first_name, title, title_of_courtesy, birth_date, hire_date, address, city, region, postal_code, country, home_phone, extension, photo, notes)
+      elif choice == "3":
+        self.view_employees()
+        emp_id_input = input("Enter the Employee ID you want to edit: ").strip()
+        if not emp_id_input.isdigit():
+            print("Invalid Employee ID")
+        else:
+            emp_id = int(emp_id_input)
+            self.edit_employee(emp_id)
