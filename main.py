@@ -6,4 +6,7 @@ from employees import Employees
 
 if __name__ == "__main__":
   employees = Employees()
-  employees.view_employees()
+  # # employees.view_employees()
+  # employees.view_employee_details()
+  # # employees.delete_employee(2, 'Mr.', 'Andrew', 'Fuller')
+  employees.employee_manager()
