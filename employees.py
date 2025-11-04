@@ -208,3 +208,9 @@ class Employees:
         else:
             emp_id = int(emp_id_input)
             self.edit_employee(emp_id)
+      elif choice == "4":
+         self.delete_employee()
+      elif choice == '5':
+        break
+      else:
+        print("Invalid choice. Try again.")
