@@ -26,7 +26,7 @@ def main():
       print("Exiting the program...")
       break
     else:
-      print("Invalid choice. Please select again.")
+      print("Invalid choice. Please try again.")
 
 if __name__ == "__main__":
   main()
